@@ -24,7 +24,7 @@ class BurpExtender(IBurpExtender, IHttpListener):
 				requestInfo = self._helpers.analyzeRequest(messageInfo.getRequest())
 				headers 	= list(requestInfo.getHeaders())
 				for header in headers:
-					if header.startswith(_AUTHORIZATION_HEADER):
+					if header.lower().startswith(_AUTHORIZATION_HEADER.lower()):
 						if (header != _bearer[bearerdomain]):
 							print "[+] Replacing: %s" % (header)
 							print "[+] With:      %s" % (_bearer[bearerdomain])
@@ -45,7 +45,7 @@ class BurpExtender(IBurpExtender, IHttpListener):
 			responseInfo = self._helpers.analyzeResponse(messageInfo.getResponse())
 			headers 	 = list(responseInfo.getHeaders())
 			for header in headers:
-				if header.startswith(_AUTHORIZATION_HEADER):
+				if header.lower().startswith(_AUTHORIZATION_HEADER.lower()):
 					_bearer[bearerdomain] = header
 					print "[+] Grabbed: %s = %s" % (bearerdomain, header)
 					break
